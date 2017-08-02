@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Eug
@@ -15,7 +16,15 @@ import java.util.Map;
  */
 public class WordFrequencyMain {
 	
-	public Map<String, Integer> getWordFrequenciesFromCollection(List<String> strings_list){
+	
+	
+	/**
+	 * This method takes a list of English words and counts the frequency of those words
+	 * Then it places them into Map
+	 * @param strings_list - a list of String objects which contain English words
+	 * @return a <tt>Map&lt;String, Integer&gt;</tt> object with String words and Integer frequencies
+	 */
+	public Map<String, Integer> getWordFrequenciesFromList(List<String> strings_list){
 		
 		//Creating a separate list to iterate and update
 		List<String> list = new ArrayList<>(strings_list);
@@ -24,10 +33,10 @@ public class WordFrequencyMain {
 		//list.replaceAll(String::toLowerCase);
 		
 		//lets sort the list
-		Comparator<String> c = Comparator.naturalOrder();
+		//Comparator<String> c = Comparator.naturalOrder();
 		//list.sort(c);
 		
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		Map<String, Integer> map = new TreeMap<String, Integer>();
 		
 		for(String word : list) {
 			word = word.toLowerCase();		//much faster than list.replaceALl
@@ -40,11 +49,28 @@ public class WordFrequencyMain {
 		return map;
 	}
 	
+	/**
+	 * TODO this is draft method
+	 */
+	public List<Map<String, Integer>> splitIntoFiles(Map<String, Integer> map) {
+		//put into four different lists
+		List<Map<String, Integer>> list = new ArrayList<>();
+		list.get(0);
+		
+		return list;		
+	}
+	
+	/**
+	 * TODO this is draft method
+	 */
 	public File readFile(String filename) {
 		
 		return null;
 	}
 	
+	/**
+	 * TODO this is draft method
+	 */
 	public Map<String, Integer> getWordFrequencies(String wordFileName){
 		
 		return null;
