@@ -6,6 +6,7 @@ package info.eugenijus.wordfrequency;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -45,18 +46,18 @@ public class TestWordFrequencyMain {
 	@Test
 	public void getWordFrequenciesFromCollection() {
 		//This list is unmodifiable
-		List<String> strings_list = Arrays.asList("java", "java", "javascript", "ruby", "angularjs",
+		List<String> strings_list = Arrays.asList("java", "Java", "javascript", "ruby", "angularjs",
 				"python", "python", "assembler");
 						
 		Map<String, Integer> map = wf.getWordFrequenciesFromCollection(strings_list);
-		
+				
 		System.out.println(map.toString());
 		
 		//map.forEach((key, value) -> System.out.println(key + " " + value));
 		
 		assertTrue(map.get("java").intValue() == 2);
 	}
-	
+		
 	/**
 	 * Test method for {@link info.eugenijus.wordfrequency.WordFrequencyMain#readFile(java.lang.String)}.
 	 */

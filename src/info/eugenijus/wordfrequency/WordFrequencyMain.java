@@ -20,13 +20,17 @@ public class WordFrequencyMain {
 		//Creating a separate list to iterate and update
 		List<String> list = new ArrayList<>(strings_list);
 		
-		//list.replaceAll(String::toUpperCase);
+		//this is too slow
+		//list.replaceAll(String::toLowerCase);
+		
+		//lets sort the list
 		Comparator<String> c = Comparator.naturalOrder();
-		list.sort(c);
+		//list.sort(c);
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		for(String word : list) {
+			word = word.toLowerCase();		//much faster than list.replaceALl
 			if(map.containsKey(word)) {
 				map.put(word, map.get(word)+1);
 			} else {
