@@ -62,7 +62,7 @@ public class TestWordFrequencyMain {
 	 */
 	@Test
 	public void testReadFile() {
-		fail("Not yet implemented");
+		assertNotNull(wf.readFile("lorem-ipsum.txt"));
 	}
 
 	/**
@@ -70,7 +70,20 @@ public class TestWordFrequencyMain {
 	 */
 	@Test
 	public void testGetWordFrequencies() {
-		fail("Not yet implemented");
+		Map<String, Integer> map = wf.getWordFrequencies("lorem-ipsum.txt");
+		assertNotNull(map);
+		assertFalse(map.containsKey("accumsan."));
+		assertFalse(map.containsKey("curae;"));
+		assertFalse(map.containsKey("amet!"));
+		assertFalse(map.containsKey("elit?"));
+		
+		List<Map<String, Integer>> result_maps = wf.splitIntoFiles(map);
+		assertTrue(result_maps.size() == 4);
+		
+		System.out.println("Words with frequencies split into 4 lists:");
+		for(Map<String, Integer> result : result_maps) {
+			assertTrue(result.size() > 0);
+			System.out.println(result.toString());
+		}
 	}
-
 }
