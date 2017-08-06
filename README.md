@@ -12,7 +12,7 @@ The goal of the application is to:
 ## 2. Other requirements
 
 - [x] 1. Technologies and frameworks can be chosen freely.
-- [ ] 2. You must use Threads.
+- [x] 2. You must use Threads.
 - [ ] 3. You must use some existing Java development frameworks.
 - [x] 4. Source code should be clean and readable.
 - [x] 5. You must use good programming practices: using paradigms of object or functional programming, code reuse, simplicity, and other basic programming principles.
