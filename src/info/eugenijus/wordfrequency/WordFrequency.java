@@ -38,8 +38,12 @@ public class WordFrequency {
 				//if(consolePrinting) System.out.println(line);
 			}
 
+		} catch (FileNotFoundException e) {
+			System.out.println(">>>>>> Oops! I couldn't read file " + filename + "!");
+			//e.printStackTrace();
+			return null;
 		} catch (IOException e) {
-			System.out.println("Oops! I couldn't read file " + filename + "!");
+			System.out.println("Error initializing stream");
 			e.printStackTrace();
 			return null;
 		}
@@ -117,9 +121,12 @@ public class WordFrequency {
 	 */
 	public Map<String, Integer> getWordFrequenciesFromFile(String filename){
 		String text = readFile(filename);
-		//Splitting the text and getting rid of punctuation
-		String[] words = text.split(Constants.DELIMETER_REGEX);
-		Map<String, Integer> map = getWordFrequenciesFromArray(words);
+		Map<String, Integer> map = null;
+		if(text != null) {
+			//Splitting the text and getting rid of punctuation
+			String[] words = text.split(Constants.DELIMETER_REGEX);
+			map = getWordFrequenciesFromArray(words);
+		}		
 		return map;
 	}
 	
@@ -165,7 +172,8 @@ public class WordFrequency {
 	}
 	
 	/**
-	 * TODO complete method description
+	 * Adds some appendix to a file, e.g. file.txt + "_A-C" becomes "file_A-C.txt"
+	 * If filename does not contain .txt, like file.data, then it becomes "file.data_appendix.txt"
 	 * @param filename
 	 * @param file_appendix
 	 * @return - string of correct file name
@@ -204,41 +212,4 @@ public class WordFrequency {
 	public boolean isExtraConsolePrinting() {
 		return extraConsolePrinting;
 	}
-	
-	/**
-	 * TODO this needs improving as per assignment goals
-	 *  <pre>
-	 *  1. Application should be capable of reading N text files 
-	 *  (where N is a number, could be 1, 2, 3...) which contain English words.
-	 *  2. It should count the frequency of the words.
-	 *  3. It should write results into 4 files where words are sorted based on first 
-	 *  letter {A-G, H-N, O-U, V-Z).
-	 *  </pre>
-	 * @param args - array of strings of file names
-	 */
-	public static void main(String[] args) {
-		WordFrequency wf = new WordFrequency(true);	
-		int processors = Runtime.getRuntime().availableProcessors();
-		System.out.println("Number of processor cores: " + processors); //1, 2, 4..
-		
-		//if there are provided file name strings, then proceed with algorithms
-		if(args.length > 0) {
-			System.out.print("Input: ");
-			for(String filename : args) {
-				System.out.printf("%s ", filename);
-			}
-			System.out.println("\n");
-			Thread[] threadPool = new Thread[args.length];
-			for(int i=0; i< args.length; i++) {
-				threadPool[i] = new Handler(args[i], false);
-				threadPool[i].start();
-			}
-		}
-		//if arguments array is empty, then use test file
-		else {			
-			Map<String, Integer> map = wf.getWordFrequenciesFromFile(Constants.file_prog_lang);
-			List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
-			wf.splitResultIntoFiles(Constants.file_prog_lang, result_maps);
-		}
-	}	
 }
