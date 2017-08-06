@@ -26,7 +26,7 @@ public class TestWordFrequency {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		wf = new WordFrequency();
+		wf = new WordFrequency(true);
 		//maybe create test files here
 	}
 

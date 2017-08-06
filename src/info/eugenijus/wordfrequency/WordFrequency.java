@@ -17,9 +17,10 @@ import java.util.TreeMap;
  *
  */
 public class WordFrequency {
+	private boolean extraConsolePrinting = true;
 	
-	public WordFrequency() {
-		//constructor in case I will need it later
+	public WordFrequency(boolean _consolePrinting) {
+		extraConsolePrinting = _consolePrinting;
 	}
 	
 	/**
@@ -34,7 +35,7 @@ public class WordFrequency {
 			String line;
 			while ((line = br.readLine()) != null) {
 				sb.append(line).append(" ");
-				//System.out.println(line);
+				//if(consolePrinting) System.out.println(line);
 			}
 
 		} catch (IOException e) {
@@ -45,15 +46,20 @@ public class WordFrequency {
 		return sb.toString();
 	}
 	
-	public void writeFile(String filename, Map<String, Integer> data) {
+	public boolean writeFile(String filename, Map<String, Integer> data) {
+		boolean successfull = false;
 		try(BufferedWriter writer = new BufferedWriter(new FileWriter(Constants.FOLDER+"/"+filename))){
 			writer.write(data.toString());
+			successfull = true;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
+			successfull = false;
 		} catch (IOException e) {
 			System.out.println("Error initializing stream");
+			successfull = false;
 			e.printStackTrace();
 		}
+		return successfull;
 	}
 		
 	/**
@@ -88,12 +94,14 @@ public class WordFrequency {
 					}
 				}				
 			}
-			System.out.println("Word Frequencies counted successfully!");
-			System.out.println(map.toString());
+			if(extraConsolePrinting) {
+				System.out.println("Word Frequencies counted successfully!");
+				System.out.println(map.toString());
+			}
 		} else {
 			System.out.println("The provided word list is empty!");
 		}
-		System.out.println();
+		if(extraConsolePrinting) System.out.println();
 		return map;
 	}
 	
@@ -145,11 +153,13 @@ public class WordFrequency {
 		    }
 		}
 		
-		System.out.println("Words with frequencies split into 4 lists:");
-		for(Map<String, Integer> result : list) {
-			System.out.println(result.toString());
+		if(extraConsolePrinting) {
+			System.out.println("Words with frequencies split into 4 lists:");
+			for(Map<String, Integer> result : list) {
+				System.out.println(result.toString());
+			}
+			System.out.println();
 		}
-		System.out.println();
 		return list;		
 	}
 	
@@ -170,17 +180,24 @@ public class WordFrequency {
 		filename_tmp.append("_").append(file_appendix);
 		filename_tmp.append(".txt"); 
 		
-		System.out.println("filename_tmp: " + filename_tmp);
+		if(extraConsolePrinting) System.out.println("filename_tmp: " + filename_tmp);
 		return filename_tmp.toString();
 	}
 	
-	public void splitResultIntoFiles(String filename, List<Map<String, Integer>> result_maps) {
+	public boolean splitResultIntoFiles(String filename, List<Map<String, Integer>> result_maps) {
+		boolean successfull = true;
 		for (int i = 0; i < Constants.FILE_APPENDIXES.length; i++) {
 			if(result_maps.get(i) != null && result_maps.get(i).size() > 0) {
 				String result_file_name = addAppendix(filename, Constants.FILE_APPENDIXES[i]);
-				writeFile(result_file_name, result_maps.get(i));
+				successfull = successfull && writeFile(result_file_name, result_maps.get(i));
 			}
 		}
+		if(successfull) {
+			System.out.println("All files written successfully!");
+		} else {
+			System.out.println("Some of the files failed to write!");
+		}
+		return successfull;
 	}
 	
 	/**
@@ -195,7 +212,7 @@ public class WordFrequency {
 	 * @param args - array of strings of file names
 	 */
 	public static void main(String[] args) {
-		WordFrequency wf = new WordFrequency();		
+		WordFrequency wf = new WordFrequency(true);		
 		//if there are provided file name strings, then proceed with algorithms
 		if(args.length > 0) {
 			System.out.print("Input: ");
@@ -217,6 +234,10 @@ public class WordFrequency {
 			Map<String, Integer> map = wf.getWordFrequenciesFromFile(Constants.file_prog_lang);
 			List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
 			wf.splitResultIntoFiles(Constants.file_prog_lang, result_maps);
-		}	
+		}
+	}
+
+	private boolean isExtraConsolePrinting() {
+		return extraConsolePrinting;
 	}	
 }
