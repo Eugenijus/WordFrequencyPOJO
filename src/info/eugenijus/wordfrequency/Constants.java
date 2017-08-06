@@ -2,7 +2,7 @@ package info.eugenijus.wordfrequency;
 
 public class Constants {
 	//regex to check for punctuation marks (testing => https://regex101.com/)
-	public static final String DELIMETER_REGEX = "\\.|\\,|\\;|\\s+|\\?|\\!";
+	public static final String DELIMETER_REGEX = "\\.|\\,|\\;|\\s+|\\?|\\!|\\:|\\-";
 	protected static final String FOLDER = "text-files";
 	public static final String file_lorem_ipsum = "lorem-ipsum.txt";
 	public static final String file_prog_lang = "prog-lang.txt";
