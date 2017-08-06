@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +60,7 @@ public class WordFrequency {
 			e.printStackTrace();
 		}
 	}
-	
+		
 	/**
 	 * This method takes a list of English words and counts the frequency of those words
 	 * Then it places them into Map
@@ -146,7 +148,13 @@ public class WordFrequency {
 		    } else if (first_letter >= Constants.SMALL_V && first_letter <= Constants.SMALL_Z) {
 		    	list.get(3).put(entry.getKey(), entry.getValue());
 		    }
-		}		
+		}
+		
+		System.out.println("Words with frequencies split into 4 lists:");
+		for(Map<String, Integer> result : list) {
+			System.out.println(result.toString());
+		}
+		System.out.println();
 		return list;		
 	}
 	
@@ -171,6 +179,15 @@ public class WordFrequency {
 		return filename_tmp.toString();
 	}
 	
+	public void splitResultIntoFiles(String filename, List<Map<String, Integer>> result_maps) {
+		for (int i = 0; i < Constants.FILE_APPENDIXES.length; i++) {
+			if(result_maps.get(i) != null && result_maps.get(i).size() > 0) {
+				String result_file_name = addAppendix(filename, Constants.FILE_APPENDIXES[i]);
+				writeFile(result_file_name, result_maps.get(i));
+			}
+		}
+	}
+	
 	/**
 	 * TODO this needs improving as per assignment goals
 	 *  <pre>
@@ -183,23 +200,26 @@ public class WordFrequency {
 	 * @param args - array of strings of file names
 	 */
 	public static void main(String[] args) {
-		WordFrequency wf = new WordFrequency();
-		String filename = "lorem-ipsum.txt";
-		String [] file_appendixes = {"A-G", "H-N", "O-U", "V-Z"};
+		WordFrequency wf = new WordFrequency();		
 		
-		Map<String, Integer> map = wf.getWordFrequenciesFromFile(filename);
-		List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
-		
-		System.out.println("Words with frequencies split into 4 lists:");
-		for(Map<String, Integer> result : result_maps) {
-			System.out.println(result.toString());
-		}
-		
-		for (int i = 0; i < file_appendixes.length; i++) {
-			if(result_maps.get(i) != null && result_maps.get(0).size() > 0) {
-				String result_file_name = wf.addAppendix(filename, file_appendixes[i]);
-				wf.writeFile(result_file_name, result_maps.get(i));
+		//if there are provided file name strings, then proceed with algorithms
+		if(args.length > 0) {
+			//TODO implement with more N files
+			//List<String> inputList = (ArrayList<String>) Arrays.asList(args);
+			//inputList.add(Constants.file_lorem_ipsum);
+			
+			for(String filename : args) {
+				System.out.println("Processing file " + filename + " from command line input");
+				Map<String, Integer> map = wf.getWordFrequenciesFromFile(filename);
+				List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
+				wf.splitResultIntoFiles(filename, result_maps);
 			}
 		}
-	}
+		//if arguments array is empty, then use test file
+		else {			
+			Map<String, Integer> map = wf.getWordFrequenciesFromFile(Constants.file_prog_lang);
+			List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
+			wf.splitResultIntoFiles(Constants.file_prog_lang, result_maps);
+		}	
+	}	
 }

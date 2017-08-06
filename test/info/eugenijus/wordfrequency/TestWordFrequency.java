@@ -107,23 +107,18 @@ public class TestWordFrequency {
 	 */
 	@Test
 	public void testSplitIntoMaps() {
-		String[] strings_array = {"java", "Java", "z-lang", "javascript", "ruby", "angularjs",
-				"python", "python", "assembler", "javascript", "JavaScript"};
+		String[] strings_array = {"java", "Java", "z-lang", "javascript", "angularjs", 
+				"assembler", "javascript", "JavaScript"};
 						
 		Map<String, Integer> map = wf.getWordFrequenciesFromArray(strings_array);
 		List<Map<String, Integer>> list_of_maps = wf.splitIntoMaps(map);
 		
-		System.out.println("Words with frequencies split into 4 lists:");
-		for(Map<String, Integer> lil_map : list_of_maps) {
-			assertTrue(lil_map.size() > 0);
-			System.out.println(lil_map.toString());
-		}
 		//making sure there are 4 maps
 		assertTrue(list_of_maps.size() == 4);
 		//making sure each map has words
 		assertTrue(list_of_maps.get(0).get("angularjs") == 1);
 		assertTrue(list_of_maps.get(1).get("javascript") == 3);
-		assertTrue(list_of_maps.get(2).get("python") == 2);
+		assertNull(list_of_maps.get(2).get("python"));
 		assertTrue(list_of_maps.get(3).get("z-lang") == 1);
 	}
 	
