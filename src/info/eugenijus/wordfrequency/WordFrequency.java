@@ -41,6 +41,7 @@ public class WordFrequency {
 		} catch (IOException e) {
 			System.out.println("Oops! I couldn't read file " + filename + "!");
 			e.printStackTrace();
+			return null;
 		}
 		System.out.println("File " + filename + " was read succesfully!");
 		return sb.toString();
@@ -199,6 +200,10 @@ public class WordFrequency {
 		}
 		return successfull;
 	}
+
+	public boolean isExtraConsolePrinting() {
+		return extraConsolePrinting;
+	}
 	
 	/**
 	 * TODO this needs improving as per assignment goals
@@ -212,7 +217,10 @@ public class WordFrequency {
 	 * @param args - array of strings of file names
 	 */
 	public static void main(String[] args) {
-		WordFrequency wf = new WordFrequency(true);		
+		WordFrequency wf = new WordFrequency(true);	
+		int processors = Runtime.getRuntime().availableProcessors();
+		System.out.println("Number of processor cores: " + processors); //1, 2, 4..
+		
 		//if there are provided file name strings, then proceed with algorithms
 		if(args.length > 0) {
 			System.out.print("Input: ");
@@ -220,13 +228,10 @@ public class WordFrequency {
 				System.out.printf("%s ", filename);
 			}
 			System.out.println("\n");
-			
-			for(String filename : args) {
-				System.out.println("Processing file " + filename + " from command line input");
-				Map<String, Integer> map = wf.getWordFrequenciesFromFile(filename);
-				List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
-				wf.splitResultIntoFiles(filename, result_maps);
-				System.out.println("========================================\n");
+			Thread[] threadPool = new Thread[args.length];
+			for(int i=0; i< args.length; i++) {
+				threadPool[i] = new Handler(args[i], false);
+				threadPool[i].start();
 			}
 		}
 		//if arguments array is empty, then use test file
@@ -235,9 +240,5 @@ public class WordFrequency {
 			List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
 			wf.splitResultIntoFiles(Constants.file_prog_lang, result_maps);
 		}
-	}
-
-	private boolean isExtraConsolePrinting() {
-		return extraConsolePrinting;
 	}	
 }
