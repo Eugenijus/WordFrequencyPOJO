@@ -132,6 +132,7 @@ public class TestWordFrequency {
 	 */
 	@Test
 	public void testAddAppendix() {
-		assertTrue(wf.addAppendix("failas.txt", "appendix") == "failas_appendix.txt");
+		assertTrue(wf.addAppendix("failas.txt", "appendix").equals("failas_appendix.txt"));
+		assertTrue(wf.addAppendix("failas.data", "appendix").equals("failas.data_appendix.txt"));
 	}
 }

@@ -154,23 +154,20 @@ public class WordFrequency {
 	 * TODO complete method description
 	 * @param filename
 	 * @param file_appendix
-	 * @return
+	 * @return - string of correct file name
 	 */
 	public String addAppendix(String filename, String file_appendix) {
-		StringBuilder filename_tmp = new StringBuilder();
-		
-		//lets see if the file name has an extension
-		//http://www.mkyong.com/regular-expressions/how-to-validate-image-file-extension-with-regular-expression/
-		//([^\s]+(\.(?i)(txt|data|dat))$)
-		String regex = "([^\\s]+(\\.(?i)(txt|data|dat))$)";
-		
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(filename);
-		//TODO this part is incomplete
-		System.out.println("matcher.matches() " + matcher.matches());
-		
+		StringBuilder filename_tmp = new StringBuilder();		
+		//lets see if the file name has .txt extension
+		if(filename.endsWith(".txt")) {
+			filename_tmp.append(filename.substring(0, filename.indexOf('.')));
+		} else {
+			filename_tmp.append(filename);
+		}
 		filename_tmp.append("_").append(file_appendix);
 		filename_tmp.append(".txt"); 
+		
+		System.out.println("filename_tmp: " + filename_tmp);
 		return filename_tmp.toString();
 	}
 	
