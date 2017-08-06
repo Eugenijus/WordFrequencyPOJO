@@ -6,16 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Eug
@@ -201,18 +196,20 @@ public class WordFrequency {
 	 */
 	public static void main(String[] args) {
 		WordFrequency wf = new WordFrequency();		
-		
 		//if there are provided file name strings, then proceed with algorithms
 		if(args.length > 0) {
-			//TODO implement with more N files
-			//List<String> inputList = (ArrayList<String>) Arrays.asList(args);
-			//inputList.add(Constants.file_lorem_ipsum);
+			System.out.print("Input: ");
+			for(String filename : args) {
+				System.out.printf("%s ", filename);
+			}
+			System.out.println("\n");
 			
 			for(String filename : args) {
 				System.out.println("Processing file " + filename + " from command line input");
 				Map<String, Integer> map = wf.getWordFrequenciesFromFile(filename);
 				List<Map<String, Integer>> result_maps = wf.splitIntoMaps(map);
 				wf.splitResultIntoFiles(filename, result_maps);
+				System.out.println("========================================\n");
 			}
 		}
 		//if arguments array is empty, then use test file

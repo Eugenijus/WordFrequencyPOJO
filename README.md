@@ -5,13 +5,13 @@ Here I will publish a programming exercise solution for a word frequency problem
 ## 1. Functional requirements
 
 The goal of the application is to:
-- [ ] 1. Application should be capable of reading N text files (where N is a number, could be 1, 2, 3...) which contain English words.
+- [x] 1. Application should be capable of reading N text files (where N is a number, could be 1, 2, 3...) which contain English words.
 - [x] 2. It should count the frequency of the words.
 - [x] 3. It should write results into 4 files where words are sorted based on first letter {A-G, H-N, O-U, V-Z).
 
 ## 2. Other requirements
 
-- [x] 1. Technologies and frameworks can be chosed freely.
+- [x] 1. Technologies and frameworks can be chosen freely.
 - [ ] 2. You must use Threads.
 - [ ] 3. You must use some existing Java development frameworks.
 - [x] 4. Source code should be clean and readable.
