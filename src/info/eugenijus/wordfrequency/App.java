@@ -13,9 +13,8 @@ public class App {
 	 *  </pre>
 	 * @param args - array of strings of file names
 	 */
-	public static void main(String[] args) {
-		WordFrequency wf = new WordFrequency(true);	
-		int processors = Runtime.getRuntime().availableProcessors();
+	public static void main(String[] args) {	
+		//int processors = Runtime.getRuntime().availableProcessors();
 		//System.out.println("Number of processor cores: " + processors); //1, 2, 4..
 		
 		//if there are provided file name strings, then proceed with algorithms
